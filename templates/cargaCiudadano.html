@@ -1,0 +1,50 @@
+<div>
+    <h4>Agregar Ciudadanos</h4>
+
+    <form>
+        <div class="input-group">
+            <input ng-model="vm.nombre" type="text" class="form-control"
+                   placeholder="Ingresar nombre de ciudadano">
+            <input ng-model="vm.apellido" type="text" class="form-control"
+                   placeholder="Ingresar apellido de ciudadano">
+<!--
+            <input ng-model="vm.documento" type="text" class="form-control"
+                   placeholder="Ingresar documento de ciudadano">
+-->
+
+            <div class="input-group-btn">
+                <button type="submit" class="btn btn-default" ng-click="vm.agregarCiudadano()">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Calle</th>
+            <th>Altura</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="ciudadano in vm.ciudadanos">
+            <td>
+               <a ui-sref="editarCiudadano({id: ciudadano.id})">{{ciudadano.nombre}}</a>
+            </td>
+            <td>
+                <a ui-sref="editarCiudadano({id: ciudadano.id})">{{ciudadano.apellido}}</a>
+            </td>
+            <td>
+                <a ui-sref="editarCiudadano({id: ciudadano.id})">{{ciudadano.domicilio.calle}}</a>
+            </td>
+            <td>
+                <a ui-sref="editarCiudadano({id: ciudadano.id})">{{ciudadano.domicilio.altura}}</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>

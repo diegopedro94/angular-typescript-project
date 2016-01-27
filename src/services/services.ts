@@ -2,10 +2,10 @@
  * Created by dpedro on 1/22/2016.
  */
 
-/// <reference path="typings/underscore/underscore.d.ts" />
-import {getModule} from "./app.ts";
-import {Ciudadano} from "./CiudadanoModel.ts"
-import {Domicilio} from "./domicilioModel.ts"
+/// <reference path="../../typings/underscore/underscore.d.ts" />
+import {getModule} from "./../app/app.ts";
+import {Ciudadano} from "./../model/CiudadanoModel.ts"
+import {Domicilio} from "./../model/domicilioModel.ts"
 //import {IHttpPromiseCallbackArg} from "angular"
 
 module Services {
@@ -19,15 +19,15 @@ module Services {
         /* @ngInject */
         constructor(private $http: ng.IHttpService, private $q: ng.IQService) {}
 
-        findAll(): ng.IPromise<Ciudadano[]> {
-            return this.$http.get('http://10.140.1.28:8081/ciudadanos')
+        findAll(): ng.IPromise<any> {
+            return this.$http.get('http://localhost:8081/ciudadanos')
                              .then((response: ng.IHttpPromiseCallbackArg<Ciudadano[]>): Ciudadano[] => {
-                                 return this.ciudadanos.concat(response.data);
-                                 console.log(this.ciudadanos);
-                             });
-                            /* .catch((response) => {
+                                 var ciudadanos = _.union(this.ciudadanos,response.data);
+                                 this.ciudadanos = _.unique(ciudadanos);
+                                 return this.ciudadanos;
+                             }).catch((response) => {
                                  return console.log(response, "ERROR DE SERVICIO!!");
-                             });*/
+                             });
         }
 
         crearCiudadano(id: number,nombre: string, apellido: string, domicilio: Domicilio) {

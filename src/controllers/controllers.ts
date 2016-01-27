@@ -2,29 +2,29 @@
  * Created by dpedro on 1/21/2016.
  */
 
-/// <reference path="typings/angularjs/angular.d.ts" />
+/// <reference path="../../typings/angularjs/angular.d.ts" />
 
-import {getModule} from "./app.ts";
-import {CiudadanoService} from "./services.ts";
-
+import {getModule} from "./../app/app.ts";
+import {CiudadanoService} from "./../services/services.ts";
+import {Ciudadano} from "./../model/CiudadanoModel.ts"
 
 module Controllers {
     var app = getModule();
     'use strict';
 
-    class CiudadanoController {
+    export class CiudadanoController {
 
-        public idCiudadano = 0;
+        public idCiudadano = 1;
         public ciudadanos = [];
         public nombre;
         public apellido;
         public domicilio;
+        private ciudadano: Ciudadano;
         private $stateParams;
 
 
         /*@ngInject*/
         constructor(private $state: ng.ui.IStateService,$stateParams: ng.ui.IStateParamsService,private ciudadanoService: CiudadanoService) {
-            console.log(this.ciudadanos);
             this.$stateParams = $stateParams;
             this.asignarCiudadanos();
         }
@@ -37,9 +37,13 @@ module Controllers {
             var ciudadano = this.ciudadanoService.crearCiudadano(this.idCiudadano,this.nombre, this.apellido, this.domicilio);
             this.ciudadanoService.agregarCiudadano(ciudadano);
         }
+
+        editarCiudadano(ciudadano: Ciudadano) {
+            this.ciudadano = ciudadano;
+        }
     }
 
-    class EdicionCiudadanoController {
+    export class EdicionCiudadanoController {
         public nombre;
         public apellido;
         public documento;
@@ -55,7 +59,6 @@ module Controllers {
 
         private obtenerCiudadano() {
             this.ciudadano = this.ciudadanoService.obtenerCiudadanoPorId(this.$stateParams.id);
-            console.log(this.ciudadano);
             if(!this.ciudadano) {
                 this.$state.go('cargaCiudadano');
                 return;
@@ -76,6 +79,7 @@ module Controllers {
 
 
     }
+
 
     app.controller('ciudadanoCtrl', CiudadanoController);
     app.controller('edicionCiudadanoController', EdicionCiudadanoController);

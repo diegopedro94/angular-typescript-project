@@ -1,9 +1,9 @@
-import {getModule} from "./app";
+import {getModule} from "./../app/app";
 /**
  * Created by dpedro on 1/22/2016.
  */
-/// <reference path="typings/angularjs/angular.d.ts" />
-/// <reference path="typings/angular-ui-router/angular-ui-router.d.ts" />
+/// <reference path="../../typings/angularjs/angular.d.ts" />
+/// <reference path="../../typings/angular-ui-router/angular-ui-router.d.ts" />
 
 module Routing {
 

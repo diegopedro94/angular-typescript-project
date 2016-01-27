@@ -11,7 +11,7 @@ var argv = yargs.choices('env', ['development', 'staging', 'production', 'vagran
 
 module.exports = {
     context: __dirname,
-    entry: ['./app.ts','./CiudadanoModel.ts','./controllers.ts','./services.ts','./routing.ts', './domicilioModel.ts'],
+    entry: ['./src/app/app.ts','./src/model/CiudadanoModel.ts','./src/controllers/controllers.ts','./src/services/services.ts','./src/routing/routing.ts', './src/model/domicilioModel.ts', './src/directives/directives.ts'],
     plugins: [
         new webpack.HotModuleReplacementPlugin()
     ],

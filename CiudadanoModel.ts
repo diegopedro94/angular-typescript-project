@@ -8,16 +8,14 @@ module CiudadanoModel {
 
     export class Ciudadano {
         public id;
-        private documento;
         private apellido;
         private nombre;
         private domicilio;
 
-        constructor(id: number,nombre: string, apellido: string, documento: number, domicilio: Domicilio) {
+        constructor(id: number,nombre: string, apellido: string, domicilio: Domicilio) {
             this.id = id;
             this.nombre = nombre;
             this.apellido = apellido;
-            this.documento = documento;
             this.domicilio = domicilio;
         }
     }

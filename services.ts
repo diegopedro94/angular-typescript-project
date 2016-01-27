@@ -19,20 +19,20 @@ module Services {
         /* @ngInject */
         constructor(private $http: ng.IHttpService, private $q: ng.IQService) {}
 
-        findAll(): ng.IPromise<void> {
+        findAll(): ng.IPromise<Ciudadano[]> {
             return this.$http.get('http://10.140.1.28:8081/ciudadanos')
                              .then((response: ng.IHttpPromiseCallbackArg<Ciudadano[]>): Ciudadano[] => {
-                                 this.ciudadanos = response.data;
-                                 return response.data
-                             })
-                             .catch((response) => {
-                                 return console.log(response, "ERROR DE SERVICIO!!");
+                                 return this.ciudadanos.concat(response.data);
+                                 console.log(this.ciudadanos);
                              });
+                            /* .catch((response) => {
+                                 return console.log(response, "ERROR DE SERVICIO!!");
+                             });*/
         }
 
-        crearCiudadano(id: number,nombre: string, apellido: string, documento: number, domicilio: Domicilio) {
+        crearCiudadano(id: number,nombre: string, apellido: string, domicilio: Domicilio) {
             this.ciudadanoId = id;
-            var ciudadano = new Ciudadano(this.ciudadanoId,nombre,apellido,documento,domicilio);
+            var ciudadano = new Ciudadano(this.ciudadanoId,nombre,apellido,domicilio);
             return ciudadano;
         }
 

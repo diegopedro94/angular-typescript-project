@@ -3,7 +3,6 @@
  */
 
 /// <reference path="typings/angularjs/angular.d.ts" />
-/// <reference path="./services.ts"/>
 
 import {getModule} from "./app.ts";
 import {CiudadanoService} from "./services.ts";
@@ -19,13 +18,14 @@ module Controllers {
         public ciudadanos = [];
         public nombre;
         public apellido;
-        public documento;
         public domicilio;
+        private $stateParams;
 
 
-        static $inject = ['$state','$stateParams','ciudadanoService'];
-
-        constructor(private $state: ng.ui.IStateService,private $stateParams: ng.ui.IStateParamsService,private ciudadanoService: CiudadanoService) {
+        /*@ngInject*/
+        constructor(private $state: ng.ui.IStateService,$stateParams: ng.ui.IStateParamsService,private ciudadanoService: CiudadanoService) {
+            console.log(this.ciudadanos);
+            this.$stateParams = $stateParams;
             this.asignarCiudadanos();
         }
 
@@ -34,35 +34,30 @@ module Controllers {
         }
 
         public agregarCiudadano() {
-            var ciudadano = this.ciudadanoService.crearCiudadano(this.nombre, this.apellido, this.documento, this.domicilio);
+            var ciudadano = this.ciudadanoService.crearCiudadano(this.idCiudadano,this.nombre, this.apellido, this.domicilio);
             this.ciudadanoService.agregarCiudadano(ciudadano);
         }
     }
 
     class EdicionCiudadanoController {
-        private state;
-        private stateParams;
-        private ciudadanoService;
         public nombre;
         public apellido;
         public documento;
         public ciudadano;
         public domicilio;
+        private $stateParams;
 
-        static $inject = ['$state','$stateParams','ciudadanoService'];
-
-        constructor($state: ng.ui.IStateService, $stateParams: ng.ui.IStateParamsService, ciudadanoService: CiudadanoService) {
-            this.state = $state;
-            this.stateParams = $stateParams;
-            this.ciudadanoService = ciudadanoService;
+        /*@ngInject*/
+        constructor(private $state: ng.ui.IStateService,$stateParams: ng.ui.IStateParamsService,private ciudadanoService: CiudadanoService) {
+            this.$stateParams = $stateParams;
             this.obtenerCiudadano();
         }
 
         private obtenerCiudadano() {
-            this.ciudadano = this.ciudadanoService.obtenerCiudadanoPorId(this.stateParams.id);
+            this.ciudadano = this.ciudadanoService.obtenerCiudadanoPorId(this.$stateParams.id);
             console.log(this.ciudadano);
             if(!this.ciudadano) {
-                this.state.go('cargaCiudadano');
+                this.$state.go('cargaCiudadano');
                 return;
             }
             this.nombre = this.ciudadano.nombre;
@@ -76,7 +71,7 @@ module Controllers {
             this.ciudadano.apellido = this.apellido;
             this.ciudadano.documento = this.documento;
             this.ciudadano.domicilio = this.domicilio;
-            this.state.go('cargaCiudadano');
+            this.$state.go('cargaCiudadano');
         }
 
 
